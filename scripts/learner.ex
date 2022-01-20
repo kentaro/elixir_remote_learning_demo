@@ -30,3 +30,5 @@ defmodule Learner do
     {:reply, params, params}
   end
 end
+
+# {:ok, pid} = Learner.start_link()

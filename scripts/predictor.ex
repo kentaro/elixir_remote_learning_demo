@@ -9,14 +9,13 @@ defmodule Predictor do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
-  def retrieve_model() do
+  def retrieve_params() do
     GenServer.call(:global.whereis_name(:learner), :retrieve_params)
   end
 
-  def predict(params) do
-    max = 100
+  def predict(params, n \\ 100) do
     match_count =
-      1..max
+      1..n
       |> Enum.count(fn n ->
         pred = NxFizzBuzz.predict_fizz_buzz(params, n)
         answer = NxFizzBuzz.fizz_buzz(n)
@@ -26,6 +25,9 @@ defmodule Predictor do
       end)
 
     IO.puts("================")
-    IO.puts("Accuracy: #{match_count / max}")
+    IO.puts("Accuracy: #{match_count / n}")
   end
 end
+
+# Node.connect(:learner@keyaki)
+# Predictor.start_link()
